@@ -204,7 +204,7 @@ iCarouselOption;
 - (void)removeItemAtIndex:(NSInteger)index animated:(BOOL)animated;
 - (void)insertItemAtIndex:(NSInteger)index animated:(BOOL)animated;
 - (void)reloadItemAtIndex:(NSInteger)index animated:(BOOL)animated;
-
+- (void)didPan:(UIPanGestureRecognizer*)panGesture;
 - (void)reloadData;
 
 @end
