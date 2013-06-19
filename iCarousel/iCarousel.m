@@ -2007,8 +2007,8 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     if ([gesture isKindOfClass:[UIPanGestureRecognizer class]])
     {
         //ignore vertical swipes
-        UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
-        CGPoint translation = [panGesture translationInView:self];
+        UIPanGestureRecognizer *panGesture1 = (UIPanGestureRecognizer *)gesture;
+        CGPoint translation = [panGesture1 translationInView:self];
         
         if (_ignorePerpendicularSwipes)
         {
@@ -2038,20 +2038,20 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     }
 }
 
-- (void)didPan:(UIPanGestureRecognizer *)panGesture
+- (void)didPan:(UIPanGestureRecognizer *)panGesture1
 {
-    CGPoint testPoint = [panGesture locationInView:self];
+    CGPoint testPoint = [panGesture1 locationInView:self];
     //NSLog(@"icarousel x:%f", testPoint.x);
     if (_scrollEnabled)
     {
-        switch (panGesture.state)
+        switch (panGesture1.state)
         {
             case UIGestureRecognizerStateBegan:
             {
                 _dragging = YES;
                 _scrolling = NO;
                 _decelerating = NO;
-                _previousTranslation = _vertical? [panGesture translationInView:self].y: [panGesture translationInView:self].x;
+                _previousTranslation = _vertical? [panGesture1 translationInView:self].y: [panGesture1 translationInView:self].x;
                 if ([_delegate respondsToSelector:@selector(carouselWillBeginDragging:)])
                 {
                     [_delegate carouselWillBeginDragging:self];
@@ -2102,15 +2102,15 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
             }
             default:
             {
-                CGFloat translation = (_vertical? [panGesture translationInView:self].y: [panGesture translationInView:self].x) - _previousTranslation;
+                CGFloat translation = (_vertical? [panGesture1 translationInView:self].y: [panGesture1 translationInView:self].x) - _previousTranslation;
                 CGFloat factor = 1.0f;
                 if (!_wrapEnabled && _bounces)
                 {
                     factor = 1.0f - fminf(fabsf(_scrollOffset - [self clampedOffset:_scrollOffset]), _bounceDistance) / _bounceDistance;
                 }
                 
-                _previousTranslation = _vertical? [panGesture translationInView:self].y: [panGesture translationInView:self].x;
-                _startVelocity = -(_vertical? [panGesture velocityInView:self].y: [panGesture velocityInView:self].x) * factor * _scrollSpeed / _itemWidth;
+                _previousTranslation = _vertical? [panGesture1 translationInView:self].y: [panGesture1 translationInView:self].x;
+                _startVelocity = -(_vertical? [panGesture1 velocityInView:self].y: [panGesture1 velocityInView:self].x) * factor * _scrollSpeed / _itemWidth;
                 _scrollOffset -= translation * factor * _offsetMultiplier / _itemWidth;
                 [self didScroll];
             }
